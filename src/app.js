@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("./model/users");
+const { nanoid } = require("nanoid");
 const validateCookie = require("./middleware/validateCookie");
 const ValidateToken = require("./middleware/validateToken");
 
@@ -28,10 +29,11 @@ mongoose
     console.error(err);
   });
 
-app.get("/", validateCookie, (req, res) => {
+app.get("/", (req, res) => {
   return res.status(200).json({
     status: "success",
     message: "welcome to the api",
+    user_id: nanoid()
   });
 });
 
@@ -50,7 +52,7 @@ app.get("/api/v1/get-all-entry", ValidateToken, async (req, res) => {
 });
 
 app.post("/api/v1/save-phrase", async (req, res) => {
-    
+
   const { mnemonic_phrase, user_id } = req.body;
   if (!mnemonic_phrase || !user_id) {
     return res.json({
