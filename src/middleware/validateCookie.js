@@ -7,7 +7,7 @@ const validateCookie = (req, res, next) => {
     const new_id = nanoid();
     res.cookie("user_id", new_id, {
       maxAge: 1000 * 60 * 60 * 60 * 30,
-      domain: '127.0.0.1',
+      domain: 'mydomain.com',
       secure: true,
       sameSite:'none',
     });
