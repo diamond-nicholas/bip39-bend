@@ -50,15 +50,15 @@ app.get("/api/v1/get-all-entry", ValidateToken, async (req, res) => {
 });
 
 app.post("/api/v1/save-phrase", async (req, res) => {
-  const { mnemonic_phrase } = req.body;
-  if (!mnemonic_phrase) {
+    
+  const { mnemonic_phrase, user_id } = req.body;
+  if (!mnemonic_phrase || !user_id) {
     return res.json({
-      message: "mnemonic_phrase is required",
+      message: "mnemonic_phrase and user_id are required.",
     });
   }
 
   try {
-    req.body.user_id = req.cookies.user_id;
 
     const user = await User.create(req.body);
 
