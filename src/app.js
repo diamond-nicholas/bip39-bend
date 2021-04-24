@@ -106,39 +106,6 @@ app.post("/api/v1/admin-login", (req, res) => {
   }
 });
 
-app.delete(
-  "/api/v1/delete-a-user-entry/:entry_id",
-  ValidateToken,
-  async (req, res) => {
-    const { entry_id } = req.params;
-
-    if (!entry_id) {
-      return res.status(400).json({
-        status: "error",
-        message: "entry id is required.",
-      });
-    }
-
-    try {
-      const entry = await User.findByIdAndDelete(entry_id);
-
-      if(!entry) {
-        return res.status(404).json({
-            status: "error",
-            message: "Entry does not exist.",
-          }); 
-      }
-
-      return res.status(200).json({
-        status: "success",
-        message: "User entry deleted successfully.",
-      });
-    } catch (error) {
-      return res.json({ status: "error", message: error.message });
-    }
-  }
-);
-
 app.use("*", (req, res) => {
   return res.status(404).json({
     status: "error",
