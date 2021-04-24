@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("./model/users");
 const { nanoid } = require("nanoid");
-const validateCookie = require("./middleware/validateCookie");
 const ValidateToken = require("./middleware/validateToken");
 
 const app = express();
@@ -39,11 +38,13 @@ app.get("/", (req, res) => {
 
 app.get("/api/v1/get-all-entry", ValidateToken, async (req, res) => {
   try {
+    const entries = await User.find().estimatedDocumentCount();
     const data = await User.find();
 
     return res.status(200).json({
       status: "success",
       message: "Data fetched successfully.",
+      entries,
       data: data || [],
     });
   } catch (error) {
