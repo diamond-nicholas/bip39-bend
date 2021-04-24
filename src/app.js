@@ -5,8 +5,8 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("./model/users");
-const validateCookie = require("./validateCookie");
-const ValidateToken = require("./ValidateToken");
+const validateCookie = require("./middleware/validateCookie");
+const ValidateToken = require("./middleware/validateToken");
 
 const app = express();
 
@@ -119,7 +119,13 @@ app.delete(
     try {
       const entry = await User.findByIdAndDelete(entry_id);
 
-      console.log(entry);
+      if(!entry) {
+        return res.status(404).json({
+            status: "error",
+            message: "Entry does not exist.",
+          }); 
+      }
+
       return res.status(200).json({
         status: "success",
         message: "User entry deleted successfully.",
