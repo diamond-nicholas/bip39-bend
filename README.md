@@ -1,1 +1,1 @@
-# server-bip
+# bip39-bend
