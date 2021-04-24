@@ -1,0 +1,9 @@
+DATABASE_URL = DATABASE_URL
+
+PAYLOAD = string
+
+SECRET_KEY = string
+
+ADMIN_EMAIL = email
+
+ADMIN_PASSWORD = **********
