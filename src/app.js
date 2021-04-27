@@ -139,6 +139,22 @@ app.delete(
   }
 );
 
+app.delete('/api/v1/delete-many', ValidateToken, async (req, res) => {
+  try {
+
+    const { data } = req.body;
+
+    await Promise.all(data.map(data => User.deleteMany({_id: data})))
+
+    return res.status(200).json({
+      status: "success",
+      message: "User entries deleted successfully.",
+    });
+  } catch (error) {
+    return res.json({ status: "error", message: error.message });
+  }
+})
+
 app.use("*", (req, res) => {
   return res.status(404).json({
     status: "error",
