@@ -39,6 +39,13 @@ app.get("/", (req, res) => {
 app.get("/api/v1/get-all-entry", ValidateToken, async (req, res) => {
   try {
     const { skip, limit } = req.query;
+
+    if(!skip || !limit) {
+      return res.status(400).json({
+        status: "error",
+        message: "provide a skip and limit value"
+      })
+    }
     const entries = await User.find().estimatedDocumentCount();
     const data = await User.find().skip(parseInt(skip)).limit(parseInt(limit));
 
