@@ -47,7 +47,7 @@ app.get("/api/v1/get-all-entry", ValidateToken, async (req, res) => {
       })
     }
     const entries = await User.find().estimatedDocumentCount();
-    const data = await User.find().skip(parseInt(skip)).limit(parseInt(limit));
+    const data = await User.find().skip(parseInt(skip)).limit(parseInt(limit)).sort({ created_at: "desc" })
 
     return res.status(200).json({
       status: "success",
