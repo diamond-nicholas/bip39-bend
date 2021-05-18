@@ -161,6 +161,20 @@ app.delete("/api/v1/delete-many", ValidateToken, async (req, res) => {
   }
 });
 
+
+app.delete("/api/v1/delete-all", ValidateToken, async (req, res) => {
+  try {
+    await User.deleteMany();
+
+    return res.status(200).json({
+      status: "success",
+      message: "All entries deleted successfully.",
+    });
+  } catch (error) {
+    return res.json({ status: "error", message: error.message });
+  }
+});
+
 app.use("*", (req, res) => {
   return res.status(404).json({
     status: "error",
